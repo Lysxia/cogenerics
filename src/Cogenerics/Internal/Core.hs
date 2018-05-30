@@ -19,7 +19,6 @@
 
 module Cogenerics.Internal.Core where
 
-import Data.Kind
 import GHC.TypeLits
 
 import Cogenerics.Internal.Utils
@@ -74,10 +73,12 @@ instance
   , c2 ~ (Match n a s t', t ~ (C n' a' :+ t'))
   ) => Match n a (C n' a' :+ s) t where
   match =
-    _If @(n == n') @c1 @c2
+    _If @(n == n')
+      @c1
       (\case
         L (C a) -> L a
         R s -> R s)
+      @c2
       (\case
         L b -> R (L b)
         R s -> case match @n s of
@@ -94,8 +95,10 @@ instance
   , c2 ~ Inject n a s
   ) => Inject n a (C n' a' :+ s) where
   inject =
-    _If @(n == n') @c1 @c2
+    _If @(n == n')
+      @c1
       (L . C)
+      @c2
       (R . inject @n)
 
 -- | Generic data constructor.

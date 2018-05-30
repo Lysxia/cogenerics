@@ -19,7 +19,7 @@ type family If (b :: Bool) (x :: k) (y :: k) :: k where
 type If' (b :: Bool) x y = (If b x y, IsBool b)
 
 class IsBool (b :: Bool) where
-  _If :: forall c1 c2 a. (c1 => a) -> (c2 => a) -> (If b c1 c2) => a
+  _If :: forall c1 a. (c1 => a) -> forall c2. (c2 => a) -> (If b c1 c2) => a
 
 instance IsBool 'True where
   _If a _ = a
