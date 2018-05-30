@@ -27,6 +27,9 @@ instance IsBool 'True where
 instance IsBool 'False where
   _If _ b = b
 
+-- | "Data.Type.Equality" has another definition of
+-- @('Data.Type.Equality.==')@, but I found reflexive equality more useful
+-- in type-level programming.
 type family a == b where
   a == a = 'True
   a == b = 'False
