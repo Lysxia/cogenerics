@@ -105,3 +105,6 @@ instance
 pattern D :: forall n a s t. (Inject n a s, Match n a s t) => C n a -> Per s
 pattern D c <- Per (match @n @a @s @t -> L (C -> c))
   where D (C a) = Per (inject @n @a @s a)
+
+c :: forall n a s. Inject n a s => a -> Per s
+c a = Per (inject @n @a @s a)
