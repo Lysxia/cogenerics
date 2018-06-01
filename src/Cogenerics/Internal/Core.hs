@@ -44,7 +44,7 @@ unplus f _ (L a) = f a
 unplus _ g (R b) = g b
 
 -- | Constructor.
-newtype C (name :: Symbol) a = C a
+newtype C (name :: Symbol) a = C { unC :: a }
   deriving Show
 
 data V
