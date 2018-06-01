@@ -27,6 +27,7 @@ import Cogenerics.Internal.Utils
 --
 -- Palindrome of 'GHC.Generics.Rep'.
 newtype Per a = Per { unPer :: a }
+  deriving Show
 
 -- | Sum of constructors.
 --
