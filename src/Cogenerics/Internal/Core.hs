@@ -69,17 +69,13 @@ class Match (n :: Symbol) a s t where
   match :: s -> a :+ t
 
 instance
-  ( If' (n == n') c1 c2
-  , c1 ~ (a ~ a', s ~ t)
-  , c2 ~ (Match n a s t', t ~ (C n' a' :+ t'))
+  ( If' (n == n') (a ~ a', s ~ t) (Match n a s t', t ~ (C n' a' :+ t'))
   ) => Match n a (C n' a' :+ s) t where
   match =
     _If @(n == n')
-      @c1
       (\case
         L (C a) -> L a
         R s -> R s)
-      @c2
       (\case
         L b -> R (L b)
         R s -> case match @n s of
@@ -91,15 +87,11 @@ class Inject (n :: Symbol) a s where
   inject :: a -> s
 
 instance
-  ( If' (n == n') c1 c2
-  , c1 ~ (a ~ a')
-  , c2 ~ Inject n a s
+  ( If' (n == n') (a ~ a') (Inject n a s)
   ) => Inject n a (C n' a' :+ s) where
   inject =
     _If @(n == n')
-      @c1
       (L . C)
-      @c2
       (R . inject @n)
 
 -- | Generic data constructor.
